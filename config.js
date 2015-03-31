@@ -10,7 +10,7 @@ var host="148.88.227.217";
 var port="3000";
 
 //ShapeClip interface configuration
-var h_max = 6; //number of horizontal pixels, e.g. in 3x4 grid this would be 3
+var h_max = 8; //number of horizontal pixels, e.g. in 3x4 grid this would be 3
 
 //Override the default pulse width value. Default=200ms
 var OVERRIDE_PULSE_WIDTH = 200;
@@ -24,3 +24,6 @@ var colors=[
 [255,255,0],
 [128,0,0]
 ];
+
+//Define audio file to load
+var audioFile = "test_song2.mp3";

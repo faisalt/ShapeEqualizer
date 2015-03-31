@@ -5,3 +5,21 @@ body {
 h1 {
 	color:white;
 }
+
+a#audiocontrol {
+	cursor:pointer;
+}
+
+img#controlimg {
+	width:80px;
+	height:80px;
+	bottom:10px;
+	margin:0 auto;
+	position:absolute;
+}
+
+#canvas {
+	position:absolute;
+	bottom:10px;
+	left:15%;
+}
