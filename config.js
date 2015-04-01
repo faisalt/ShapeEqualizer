@@ -27,3 +27,4 @@ var colors=[
 
 //Define audio file to load
 var audioFile = "test_song2.mp3";
+var ext_audioFile = "http://"+host+"/ShapeEqualizer/test_song2.mp3";

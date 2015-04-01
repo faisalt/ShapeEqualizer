@@ -31,7 +31,7 @@ function onError(e) {
 function drawSpectrum(array) {
 	for ( var i = 0; i < (array.length); i++ ){
 		var value = array[i];
-		ctx.fillRect(i*20,250-value,12,250);
+		ctx.fillRect(i*30,250-value,18,250);
 		//  console.log([i,value])
 	}
 };

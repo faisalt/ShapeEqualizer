@@ -10,11 +10,9 @@
 <body>
 <h1 style="font-family:calibri">ShapeClip Equalizer</h1>
 <br>
-<br>
-<canvas id="canvas" width="60" height="130" style="display: block;"></canvas>
-
+<a id="audiocontrol" onclick="return false;"><img src="images/pausebutton.png" id="controlimg"></img></a>
+<canvas id="canvas" width="300" height="230" style="display: block;"></canvas>
 </body>
-
 </html>
 
 <script type="text/javascript">
@@ -24,8 +22,13 @@ var audioBuffer;
 var sourceNode;
 var analyser;
 var javascriptNode;
-
 var pads = [];
+
+var PAUSED_STATE=true;
+var PLAY_STATE=true;
+
+var ctx;
+var gradient;
 
 $(document).ready(function() {
 	// create the audio context (chrome only for now)
@@ -38,24 +41,53 @@ $(document).ready(function() {
 	}
 	// load the sound
 	setupAudioNodes();
-	loadSound("http://"+host+"/SCEqualizer/test_song2.mp3");
+	loadSound(ext_audioFile);
+	PLAY_STATE=true;
+	$('a#audiocontrol').click(function(){
+		if(PLAY_STATE == true) {
+			PLAY_STATE=false;
+			PAUSED_STATE=true;
+			stopSound();
+			$('img#controlimg').attr("src", "images/playbutton.png");
+		} else if(PAUSED_STATE == true) {
+			PAUSED_STATE=false;
+			PLAY_STATE=true;
+			setupAudioNodes();
+			playSound();
+			$('img#controlimg').attr("src", "");
+			$('img#controlimg').attr("src", "images/pausebutton.png");
+		}
+		
+	});
+	createGrid();
+	
+	ctx = $("#canvas").get()[0].getContext("2d");
+	gradient = ctx.createLinearGradient(0,0,0,30000);
+    gradient.addColorStop(1,'#ffffff');
+    gradient.addColorStop(0.75,'#ffffff');
+    gradient.addColorStop(0.25,'#ffffff');
+    gradient.addColorStop(0,'#ffffff');
 	
 	// when the javascript node is called
 	// we use information from the analyzer node
 	// to draw the volume
 	javascriptNode.onaudioprocess = function() {
-
 		// get the average for the first channel
 		var array =  new Uint8Array(analyser.frequencyBinCount);
 		analyser.getByteFrequencyData(array);
 		var newArray=Array();
-		for(var i=2; i<h_max+2; i++) {
+		for(var i=1; i<h_max+1; i++) {
+			var val = array[i];
 			newArray.push(array[i]);
 		}
 		mapValues(pads, newArray);
+		// clear the current state
+        ctx.clearRect(0, 0, 1000, 250);
+
+        // set the fill style
+        ctx.fillStyle=gradient;
+        drawSpectrum(newArray);
 	}
-	
-	createGrid();
 });
 
 /*
