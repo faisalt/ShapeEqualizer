@@ -76,9 +76,10 @@ $(document).ready(function() {
 		var array =  new Uint8Array(analyser.frequencyBinCount);
 		analyser.getByteFrequencyData(array);
 		var newArray=Array();
-		for(var i=1; i<h_max+1; i++) {
+		for(var i=2; i<h_max+2; i++) {
 			var val = array[i];
-			newArray.push(array[i]);
+			if(i==2 || i==3) val=val-80;
+			newArray.push(val);
 		}
 		mapValues(pads, newArray);
 		// clear the current state
@@ -108,10 +109,10 @@ function createGrid() {
 	// The size of the shape-clip pad in mm.
 	var SC_SIZE = __px(20);
 	// The starting position of the grid
-	var X = 19;	var Y = 20;
+	var X = 26;	var Y = 20;
 	
 	for (var x = 0; x < h_max; ++x) {
-		var pX = X + (x * 25); // 29 -- horizontal spacing between pixels			
+		var pX = X + (x * 27.5); // 29 -- horizontal spacing between pixels			
 		var pad = null;
 		pad = new ShapeClip({x: __px(pX), width: SC_SIZE, height: SC_SIZE});
 		
@@ -123,6 +124,13 @@ function createGrid() {
 		pad.PULSE_WIDTH=OVERRIDE_PULSE_WIDTH;
 		pads.push(pad);
 	}
+	
+	var colorArray=colors;
+	for(var i=0; i<h_max; i++) {
+		pads[i].colour(255,0,0);
+	}
+	//Start the pixel pads
+	for (var i=0; i<pads.length; ++i) { pads[i].pulse(); }
 }
 
 function mapValues(pads, values) {
