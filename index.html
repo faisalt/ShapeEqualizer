@@ -106,12 +106,12 @@ function createGrid() {
 	console.log("User Agent: " + agent);
 	
 	// The size of the shape-clip pad in mm.
-	var SC_SIZE = __px(20);
+	var SC_SIZE = __px(17);
 	// The starting position of the grid
 	var X = 19;	var Y = 20;
 	
 	for (var x = 0; x < h_max; ++x) {
-		var pX = X + (x * 25); // 29 -- horizontal spacing between pixels			
+		var pX = X + (x * 23); // 29 -- horizontal spacing between pixels			
 		var pad = null;
 		pad = new ShapeClip({x: __px(pX), width: SC_SIZE, height: SC_SIZE});
 		
